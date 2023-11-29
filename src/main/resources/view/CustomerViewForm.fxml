@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="608.0" prefWidth="793.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
+    <children>
+        <TableView fx:id="customerTable" layoutY="200.0" onSort="#customerTableOnAction" prefHeight="311.0" prefWidth="793.0">
+            <columns>
+                <TableColumn fx:id="idCol" prefWidth="115.0" text="Customer ID" />
+                <TableColumn fx:id="nameCol" minWidth="0.0" prefWidth="189.0" text="Customer Name" />
+                <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="200.0" text="Customer Address" />
+                <TableColumn fx:id="salaryCol" minWidth="0.0" prefWidth="165.0" text="Salary" />
+                <TableColumn fx:id="optionCol" minWidth="0.0" prefWidth="123.0" text="Option" />
+            </columns>
+        </TableView>
+        <JFXButton fx:id="updateBtn" layoutX="613.0" layoutY="159.0" onAction="#updateBtnOnAction" text="Update" />
+        <JFXButton fx:id="saveBtn" layoutX="711.0" layoutY="159.0" onAction="#saveBtnOnAction" text="Save" />
+        <JFXTextField fx:id="customerIdField" layoutX="36.0" layoutY="90.0" />
+        <JFXTextField fx:id="addressTxtField" layoutX="415.0" layoutY="90.0" />
+        <JFXTextField fx:id="salaryTxtField" layoutX="610.0" layoutY="90.0" />
+        <JFXButton fx:id="reloadBtn" layoutX="637.0" layoutY="527.0" onAction="#reloadBtnOnAction" prefHeight="44.0" prefWidth="116.0" text="Reload" AnchorPane.bottomAnchor="37.0" />
+        <Label layoutX="36.0" layoutY="69.0" text="Customer ID" />
+        <Label layoutX="225.0" layoutY="69.0" text="Customer Name" />
+        <Label layoutX="415.0" layoutY="69.0" text="Customer Address" />
+        <Label fx:id="customerSalaryField" layoutX="610.0" layoutY="69.0" text="Salary" />
+        <JFXTextField fx:id="customerNameField" layoutX="225.0" layoutY="90.0" />
+    </children>
+</AnchorPane>
