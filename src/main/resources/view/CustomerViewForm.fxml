@@ -20,7 +20,7 @@
         </TableView>
         <JFXButton fx:id="updateBtn" layoutX="613.0" layoutY="159.0" onAction="#updateBtnOnAction" text="Update" />
         <JFXButton fx:id="saveBtn" layoutX="711.0" layoutY="159.0" onAction="#saveBtnOnAction" text="Save" />
-        <JFXTextField fx:id="customerIdField" layoutX="36.0" layoutY="90.0" />
+        <JFXTextField fx:id="idTxtField" layoutX="36.0" layoutY="90.0" />
         <JFXTextField fx:id="addressTxtField" layoutX="415.0" layoutY="90.0" />
         <JFXTextField fx:id="salaryTxtField" layoutX="610.0" layoutY="90.0" />
         <JFXButton fx:id="reloadBtn" layoutX="637.0" layoutY="527.0" onAction="#reloadBtnOnAction" prefHeight="44.0" prefWidth="116.0" text="Reload" AnchorPane.bottomAnchor="37.0" />
@@ -28,6 +28,7 @@
         <Label layoutX="225.0" layoutY="69.0" text="Customer Name" />
         <Label layoutX="415.0" layoutY="69.0" text="Customer Address" />
         <Label fx:id="customerSalaryField" layoutX="610.0" layoutY="69.0" text="Salary" />
-        <JFXTextField fx:id="customerNameField" layoutX="225.0" layoutY="90.0" />
+        <JFXTextField fx:id="nameTxtField" layoutX="225.0" layoutY="90.0" />
+      <JFXButton fx:id="clearBtn" layoutX="549.0" layoutY="159.0" onAction="#clearBtnOnAction" text="Clear" />
     </children>
 </AnchorPane>
