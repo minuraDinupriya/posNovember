@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import db.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,6 +63,8 @@ public class CustomerFormController implements Initializable {
     @FXML
     private Label customerSalaryField;
 
+    private Statement statement=DbConnection.getStatement();
+
     @FXML
     void customerTableOnAction(ActionEvent event) {
 
@@ -75,34 +78,26 @@ public class CustomerFormController implements Initializable {
     @FXML
     void saveBtnOnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
         String sql="INSERT INTO customer VALUES('"+idTxtField.getText()+"','"+nameTxtField.getText()+"','"+addressTxtField.getText()+"','"+Double.parseDouble(salaryTxtField.getText())+"')";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
         try {
-            Statement statement = connection.createStatement();
             int number = statement.executeUpdate(sql);
             reloadCustomerTable();
             if (number>0){
                 new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
-                clear();
+//                clear();
             }
         }catch (SQLIntegrityConstraintViolationException e){
             new Alert(Alert.AlertType.INFORMATION,"Duplicate entry").show();
         }
-        connection.close();
     }
 
     @FXML
     void updateBtnOnAction(ActionEvent event) throws ClassNotFoundException, SQLException  {
         String updateQuery="UPDATE customer SET name='"+nameTxtField.getText()+"',address='"+addressTxtField.getText()+"',salary="+Double.parseDouble(salaryTxtField.getText())+" WHERE id='"+idTxtField.getText()+"'";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
-        Statement statement = connection.createStatement();
         int number = statement.executeUpdate(updateQuery);
         reloadCustomerTable();
         if (number>0){
             new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
         }
-        connection.close();
     }
 
     @SneakyThrows
@@ -123,9 +118,6 @@ public class CustomerFormController implements Initializable {
 
     public void deleteBtnOnAction(String id) throws SQLException, ClassNotFoundException{
         String deleteQuery="DELETE FROM customer WHERE id='"+id+"'";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
-        Statement statement = connection.createStatement();
         int number = statement.executeUpdate(deleteQuery);
         reloadCustomerTable();
         //customerTable.refresh();   just like reloadCustomerTable()
@@ -134,15 +126,11 @@ public class CustomerFormController implements Initializable {
         }else {
             new Alert(Alert.AlertType.INFORMATION,"Something went wrong").show();
         }
-        connection.close();
     }
 
     private void reloadCustomerTable() throws ClassNotFoundException, SQLException  {
         ObservableList<CustomerTm> customerTmList = FXCollections.observableArrayList();
         String selectQuery="SELECT * FROM customer";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
-        Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(selectQuery);
         while (resultSet.next()){
             Button button=new Button("Delete");
@@ -163,7 +151,6 @@ public class CustomerFormController implements Initializable {
 
             customerTmList.add(customerTm);
         }
-        connection.close();
 
         customerTable.setItems(customerTmList);
 
