@@ -21,16 +21,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
-
     public JFXButton sceneChangeBtn;
-
-    static{
-        Date date=new Date();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/y");
-        System.out.println(dateFormat.format(date));
-    }
-
     public Label timeLbl;
+    public JFXButton itemViewBtn;
 
     public void sceneChangeBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) sceneChangeBtn.getScene().getWindow();
@@ -48,5 +41,10 @@ public class MainViewController implements Initializable {
                 new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    public void itemViewOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) itemViewBtn.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/ItemViewForm.fxml"))));
     }
 }

@@ -7,14 +7,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import model.tm.CustomerTm;
 
+import java.io.IOException;
 import java.net.URL;
 
 import java.sql.*;
@@ -26,6 +30,7 @@ public class CustomerFormController implements Initializable {
     public JFXButton clearBtn;
     public JFXTextField idTxtField;
     public JFXTextField nameTxtField;
+    public JFXButton backBtn;
     @FXML
     private TableView<CustomerTm> customerTable;
 
@@ -170,5 +175,10 @@ public class CustomerFormController implements Initializable {
         nameTxtField.clear();
         addressTxtField.clear();
         salaryTxtField.clear();
+    }
+
+    public void backBtnOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) backBtn.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/MainView.fxml"))));
     }
 }
