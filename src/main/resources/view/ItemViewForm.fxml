@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemViewController">
+   <children>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="48.0" prefHeight="21.0" prefWidth="105.0" text="Code">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="190.0" layoutY="48.0" prefHeight="21.0" prefWidth="105.0" text="Description">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="383.0" layoutY="48.0" prefHeight="21.0" prefWidth="105.0" text="Unit Price">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="579.0" layoutY="48.0" prefHeight="21.0" prefWidth="105.0" text="QTY">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="backBtn" layoutY="7.0" onAction="#backButtonOnAction" prefHeight="31.0" prefWidth="105.0" text="Back" />
+      <JFXTextField fx:id="codeTxtField" layoutX="15.0" layoutY="75.0" prefHeight="31.0" prefWidth="158.0" />
+      <JFXTextField fx:id="descriptionTxtField" layoutX="191.0" layoutY="75.0" prefHeight="31.0" prefWidth="158.0" />
+      <JFXTextField fx:id="unitPriceTxtField" layoutX="384.0" layoutY="75.0" prefHeight="31.0" prefWidth="158.0" />
+      <JFXTextField fx:id="qtyTxtField" layoutX="580.0" layoutY="75.0" prefHeight="31.0" prefWidth="158.0" />
+      <JFXTreeTableView fx:id="itemTable" layoutY="202.0" prefHeight="338.0" prefWidth="792.0">
+         <columns>
+            <TreeTableColumn fx:id="codeCol" prefWidth="133.0" text="Code" />
+            <TreeTableColumn fx:id="descriptionCol" prefWidth="292.0" text="Description" />
+            <TreeTableColumn fx:id="unitPriceCol" prefWidth="130.0" text="Unit Price" />
+            <TreeTableColumn fx:id="qtyCol" prefWidth="81.0" text="QTY" />
+            <TreeTableColumn fx:id="optionCol" prefWidth="159.0" text="Option" />
+         </columns>
+      </JFXTreeTableView>
+      <JFXButton layoutX="210.0" layoutY="137.0" onAction="#searchBtnOnAction" text="Search" />
+      <JFXTextField fx:id="searchTxtField" layoutX="26.0" layoutY="137.0" prefHeight="31.0" prefWidth="158.0" />
+      <JFXButton layoutX="659.0" layoutY="558.0" onAction="#refreshTableOnAction" text="Refresh Table" />
+      <JFXButton layoutX="542.0" layoutY="137.0" onAction="#updateBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Update" />
+      <JFXButton layoutX="659.0" layoutY="137.0" onAction="#saveBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Save" />
+   </children>
+</AnchorPane>
