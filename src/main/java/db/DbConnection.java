@@ -6,23 +6,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DbConnection {
-    private static Statement statement;
+    private static Connection connection;
     private DbConnection(){}
-    public static Statement getStatement(){      //return DbConnection !=null ? dbConnection:(dbConnection=new DbConnection();) getInstance method is the best practice
-        if (statement==null){
+    public static Connection getConnection(){      //return DbConnection !=null ? dbConnection:(dbConnection=new DbConnection();) getInstance method is the best practice
+        if (connection==null){
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             try {
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
-                statement = connection.createStatement();
+                return DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "minura");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return statement;
+        return null;
     }
 
 }

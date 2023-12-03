@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import db.DbConnection;
+import dto.CustomerDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,15 +18,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import dto.tm.CustomerTm;
+import model.CustomerModel;
+import model.impl.CustomerModelImpl;
 
 import java.io.IOException;
 import java.net.URL;
 
 import java.sql.*;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class CustomerFormController implements Initializable {
+public class CustomerViewController implements Initializable {
 
     public JFXButton clearBtn;
     public JFXTextField idTxtField;
@@ -68,7 +72,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private Label customerSalaryField;
 
-    private Statement statement=DbConnection.getStatement();
+    private CustomerModel customerModel=new CustomerModelImpl();
 
     @FXML
     void customerTableOnAction(ActionEvent event) {
@@ -82,13 +86,19 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void saveBtnOnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
-        String sql="INSERT INTO customer VALUES('"+idTxtField.getText()+"','"+nameTxtField.getText()+"','"+addressTxtField.getText()+"','"+Double.parseDouble(salaryTxtField.getText())+"')";
+        CustomerDto customerDto=new CustomerDto(
+                idTxtField.getText(),
+                nameTxtField.getText(),
+                addressTxtField.getText(),
+                Double.parseDouble(salaryTxtField.getText())
+                );
+
+        boolean isSaved = customerModel.saveCustomer(customerDto);
+
         try {
-            int number = statement.executeUpdate(sql);
             reloadCustomerTable();
-            if (number>0){
+            if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
-//                clear();
             }
         }catch (SQLIntegrityConstraintViolationException e){
             new Alert(Alert.AlertType.INFORMATION,"Duplicate entry").show();
@@ -97,10 +107,16 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void updateBtnOnAction(ActionEvent event) throws ClassNotFoundException, SQLException  {
-        String updateQuery="UPDATE customer SET name='"+nameTxtField.getText()+"',address='"+addressTxtField.getText()+"',salary="+Double.parseDouble(salaryTxtField.getText())+" WHERE id='"+idTxtField.getText()+"'";
-        int number = statement.executeUpdate(updateQuery);
+        CustomerDto customerDto=new CustomerDto(
+                idTxtField.getText(),
+                nameTxtField.getText(),
+                addressTxtField.getText(),
+                Double.parseDouble(salaryTxtField.getText())
+        );
+
+        boolean isUpdated = customerModel.updateCustomer(customerDto);
         reloadCustomerTable();
-        if (number>0){
+        if (isUpdated){
             new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
         }
     }
@@ -122,11 +138,10 @@ public class CustomerFormController implements Initializable {
     }
 
     public void deleteBtnOnAction(String id) throws SQLException, ClassNotFoundException{
-        String deleteQuery="DELETE FROM customer WHERE id='"+id+"'";
-        int number = statement.executeUpdate(deleteQuery);
+
+        boolean isDeleted = customerModel.deleteCustomer(id);
         reloadCustomerTable();
-        //customerTable.refresh();   just like reloadCustomerTable()
-        if (number>0){
+        if (isDeleted){
             new Alert(Alert.AlertType.INFORMATION,"Deleted Successfully").show();
         }else {
             new Alert(Alert.AlertType.INFORMATION,"Something went wrong").show();
@@ -135,14 +150,16 @@ public class CustomerFormController implements Initializable {
 
     private void reloadCustomerTable() throws ClassNotFoundException, SQLException  {
         ObservableList<CustomerTm> customerTmList = FXCollections.observableArrayList();
-        String selectQuery="SELECT * FROM customer";
-        ResultSet resultSet = statement.executeQuery(selectQuery);
-        while (resultSet.next()){
+
+        List<CustomerDto> dtoList = customerModel.getAllCustomers();
+        for (CustomerDto dto:dtoList) {
             Button button=new Button("Delete");
-            CustomerTm customerTm=new CustomerTm(resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDouble(4),
+
+            CustomerTm customerTm=new CustomerTm(
+                    dto.getId(),
+                    dto.getName(),
+                    dto.getAddress(),
+                    dto.getSalary(),
                     button
             );
 
@@ -179,7 +196,7 @@ public class CustomerFormController implements Initializable {
 
     public void backBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/MainView.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/MainView.fxml"))));
         stage.setTitle("Customer View");
     }
 }

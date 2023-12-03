@@ -14,10 +14,8 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -27,7 +25,7 @@ public class MainViewController implements Initializable {
 
     public void sceneChangeBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) sceneChangeBtn.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/CustomerViewForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"))));
         stage.setTitle("Customer View");
     }
 
@@ -46,7 +44,7 @@ public class MainViewController implements Initializable {
 
     public void itemViewOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) itemViewBtn.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/ItemViewForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ItemView.fxml"))));
         stage.setTitle("Item View");
     }
 }

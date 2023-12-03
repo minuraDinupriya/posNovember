@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import db.DbConnection;
+import dto.ItemDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,10 +21,7 @@ import javafx.stage.Stage;
 import dto.tm.ItemTm;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ItemViewController {
 
@@ -59,7 +57,7 @@ public class ItemViewController {
     @FXML
     private JFXTextField searchTxtField;
 
-    private Statement statement= DbConnection.getStatement();
+    private Connection connection=DbConnection.getConnection();
 
 
     @FXML
@@ -74,9 +72,10 @@ public class ItemViewController {
 
     @FXML
     void saveBtnOnAction(ActionEvent event) {
-        ItemTm itemTm=new ItemTm(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
-        String sql="INSERT INTO item VALUES('"+itemTm.getCode()+"','"+itemTm.getDescription()+"','"+itemTm.getUnitPrice()+"','"+itemTm.getQty()+"')";
+        ItemDto itemDto=new ItemDto(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
+        String sql="INSERT INTO item VALUES('"+itemDto.getCode()+"','"+itemDto.getDescription()+"','"+itemDto.getUnitPrice()+"','"+itemDto.getQty()+"')";
         try {
+            Statement statement = connection.createStatement();
             int number = statement.executeUpdate(sql);
             //reloadItemTable();
             if (number>0){
@@ -101,6 +100,7 @@ public class ItemViewController {
 
     private void searchItemCode(String code) throws SQLException {
         String searchQuery="SELECT * FROM item where code='"+code+"'";
+        Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(searchQuery);
         resultSet.next();
         ItemTm itemTm=new ItemTm(
@@ -121,10 +121,13 @@ public class ItemViewController {
 
     @FXML
     void updateBtnOnAction(ActionEvent event) throws SQLException {
-        ItemTm itemTm=new ItemTm(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
-        String updateQuery="UPDATE customer SET code='"+itemTm.getCode()+"',desctiption='"+itemTm.getDescription()+"',unitPrice="+itemTm.getUnitPrice()+", qtyOnHand="+itemTm.getQty()+" WHERE id='"+itemTm.getCode()+"'";
+        ItemDto itemDto=new ItemDto(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
+
+        String updateQuery="UPDATE item SET code='"+itemDto.getCode()+"',description='"+itemDto.getDescription()+"',unitPrice="+itemDto.getUnitPrice()+", qtyOnHand="+itemDto.getQty()+" WHERE code='"+itemDto.getCode()+"'";
+        Statement statement = connection.createStatement();
         int number = statement.executeUpdate(updateQuery);
-//        reloadCustomerTable();
+        loadItemTable();
+
         if (number>0){
             new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
         }
@@ -132,7 +135,7 @@ public class ItemViewController {
 
     public void backButtonOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/MainView.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/MainView.fxml"))));
         stage.setTitle("Item View");
     }
 
@@ -159,6 +162,7 @@ public class ItemViewController {
     private void loadItemTable() throws SQLException {
         ObservableList<ItemTm> itemTmList = FXCollections.observableArrayList();
         String selectQuery="SELECT * FROM item";
+        Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(selectQuery);
         while (resultSet.next()){
             JFXButton button=new JFXButton("Delete");
@@ -194,6 +198,7 @@ public class ItemViewController {
 
     private void deleteBtnOnAction(String code) throws SQLException {
         String deleteQuery="DELETE FROM item WHERE code='"+code+"'";
+        Statement statement = connection.createStatement();
         int number = statement.executeUpdate(deleteQuery);
         loadItemTable();
         //customerTable.refresh();   just like reloadCustomerTable()
@@ -214,5 +219,5 @@ public class ItemViewController {
         unitPriceTxtField.clear();
         qtyTxtField.clear();
         searchTxtField.clear();
-    }//
+    }
 }
