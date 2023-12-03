@@ -214,5 +214,5 @@ public class ItemViewController {
         unitPriceTxtField.clear();
         qtyTxtField.clear();
         searchTxtField.clear();
-    }
+    }//
 }
