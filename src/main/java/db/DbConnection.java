@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class DbConnection {
     private static Statement statement;
     private DbConnection(){}
-    public static Statement getStatement(){
+    public static Statement getStatement(){      //return DbConnection !=null ? dbConnection:(dbConnection=new DbConnection();) getInstance method is the best practice
         if (statement==null){
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");

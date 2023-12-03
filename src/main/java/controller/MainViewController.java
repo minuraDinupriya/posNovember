@@ -28,6 +28,7 @@ public class MainViewController implements Initializable {
     public void sceneChangeBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) sceneChangeBtn.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/CustomerViewForm.fxml"))));
+        stage.setTitle("Customer View");
     }
 
     @Override
@@ -46,5 +47,6 @@ public class MainViewController implements Initializable {
     public void itemViewOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) itemViewBtn.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/ItemViewForm.fxml"))));
+        stage.setTitle("Item View");
     }
 }

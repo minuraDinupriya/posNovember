@@ -39,15 +39,16 @@
          <columns>
             <TreeTableColumn fx:id="codeCol" prefWidth="133.0" text="Code" />
             <TreeTableColumn fx:id="descriptionCol" prefWidth="292.0" text="Description" />
-            <TreeTableColumn fx:id="unitPriceCol" prefWidth="130.0" text="Unit Price" />
-            <TreeTableColumn fx:id="qtyCol" prefWidth="81.0" text="QTY" />
-            <TreeTableColumn fx:id="optionCol" prefWidth="159.0" text="Option" />
+            <TreeTableColumn fx:id="unitPriceCol" prefWidth="130.0" text="UnitPrice" />
+            <TreeTableColumn fx:id="qtyCol" prefWidth="81.0" text="qty" />
+            <TreeTableColumn fx:id="optionCol" prefWidth="159.0" text="option" />
          </columns>
       </JFXTreeTableView>
       <JFXButton layoutX="210.0" layoutY="137.0" onAction="#searchBtnOnAction" text="Search" />
       <JFXTextField fx:id="searchTxtField" layoutX="26.0" layoutY="137.0" prefHeight="31.0" prefWidth="158.0" />
       <JFXButton layoutX="659.0" layoutY="558.0" onAction="#refreshTableOnAction" text="Refresh Table" />
-      <JFXButton layoutX="542.0" layoutY="137.0" onAction="#updateBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Update" />
-      <JFXButton layoutX="659.0" layoutY="137.0" onAction="#saveBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Save" />
+      <JFXButton layoutX="562.0" layoutY="137.0" onAction="#updateBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Update" />
+      <JFXButton layoutX="672.0" layoutY="137.0" onAction="#saveBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Save" />
+      <JFXButton fx:id="clearBtn" layoutX="463.0" layoutY="137.0" onAction="#clearBtnOnAction" prefHeight="31.0" prefWidth="97.0" text="Clear" />
    </children>
 </AnchorPane>

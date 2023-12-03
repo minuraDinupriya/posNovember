@@ -16,7 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import model.tm.CustomerTm;
+import dto.tm.CustomerTm;
 
 import java.io.IOException;
 import java.net.URL;
@@ -180,5 +180,6 @@ public class CustomerFormController implements Initializable {
     public void backBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/MainView.fxml"))));
+        stage.setTitle("Customer View");
     }
 }
