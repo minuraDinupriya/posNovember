@@ -14,14 +14,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
 import dto.tm.ItemTm;
+import model.ItemModel;
+import model.impl.ItemModelImpl;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 public class ItemViewController {
 
@@ -57,9 +61,9 @@ public class ItemViewController {
     @FXML
     private JFXTextField searchTxtField;
 
-    private Connection connection=DbConnection.getConnection();
 
 
+private ItemModel itemModel=new ItemModelImpl();
     @FXML
     void refreshTableOnAction(ActionEvent event) {
         clear();
@@ -71,20 +75,14 @@ public class ItemViewController {
     }
 
     @FXML
-    void saveBtnOnAction(ActionEvent event) {
+    void saveBtnOnAction(ActionEvent event) throws SQLException {
         ItemDto itemDto=new ItemDto(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
-        String sql="INSERT INTO item VALUES('"+itemDto.getCode()+"','"+itemDto.getDescription()+"','"+itemDto.getUnitPrice()+"','"+itemDto.getQty()+"')";
-        try {
-            Statement statement = connection.createStatement();
-            int number = statement.executeUpdate(sql);
-            //reloadItemTable();
-            if (number>0){
-                new Alert(Alert.AlertType.INFORMATION,"Update Success").show();;
-            }
-        }catch (SQLIntegrityConstraintViolationException e){
+        boolean isSaved = itemModel.saveItem(itemDto);
+
+        if (isSaved){
+                new Alert(Alert.AlertType.INFORMATION, "Update Success").show();
+        }else {
             new Alert(Alert.AlertType.INFORMATION,"Duplicate entry").show();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -99,17 +97,17 @@ public class ItemViewController {
     }
 
     private void searchItemCode(String code) throws SQLException {
-        String searchQuery="SELECT * FROM item where code='"+code+"'";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(searchQuery);
-        resultSet.next();
-        ItemTm itemTm=new ItemTm(
-                resultSet.getString(1),
-                resultSet.getString(2),
-                resultSet.getDouble(3),
-                resultSet.getInt(4)
-        );
-        fillTextFields(itemTm);
+//        String searchQuery="SELECT * FROM item where code='"+code+"'";
+//        Statement statement = connection.createStatement();
+//        ResultSet resultSet = statement.executeQuery(searchQuery);
+//        resultSet.next();
+//        ItemTm itemTm=new ItemTm(
+//                resultSet.getString(1),
+//                resultSet.getString(2),
+//                resultSet.getDouble(3),
+//                resultSet.getInt(4)
+//        );
+//        fillTextFields(itemTm);
     }
 
     private void fillTextFields(ItemTm itemTm) {
@@ -122,13 +120,8 @@ public class ItemViewController {
     @FXML
     void updateBtnOnAction(ActionEvent event) throws SQLException {
         ItemDto itemDto=new ItemDto(codeTxtField.getText(),descriptionTxtField.getText(),Double.parseDouble(unitPriceTxtField.getText()),Integer.parseInt(qtyTxtField.getText()));
-
-        String updateQuery="UPDATE item SET code='"+itemDto.getCode()+"',description='"+itemDto.getDescription()+"',unitPrice="+itemDto.getUnitPrice()+", qtyOnHand="+itemDto.getQty()+" WHERE code='"+itemDto.getCode()+"'";
-        Statement statement = connection.createStatement();
-        int number = statement.executeUpdate(updateQuery);
-        loadItemTable();
-
-        if (number>0){
+        boolean isUpdated = itemModel.updateItem(itemDto);
+        if (isUpdated){
             new Alert(Alert.AlertType.INFORMATION,"Update Success").show();
         }
     }
@@ -161,16 +154,17 @@ public class ItemViewController {
 
     private void loadItemTable() throws SQLException {
         ObservableList<ItemTm> itemTmList = FXCollections.observableArrayList();
-        String selectQuery="SELECT * FROM item";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(selectQuery);
-        while (resultSet.next()){
+
+        List<ItemDto> itemDtoList = itemModel.getAllItems();
+
+        for (ItemDto dto:itemDtoList) {
             JFXButton button=new JFXButton("Delete");
+
             ItemTm itemTm=new ItemTm(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getDouble(3),
-                    resultSet.getInt(4),
+                    dto.getCode(),
+                    dto.getDescription(),
+                    dto.getUnitPrice(),
+                    dto.getQty(),
                     button
             );
 
@@ -197,12 +191,10 @@ public class ItemViewController {
     }
 
     private void deleteBtnOnAction(String code) throws SQLException {
-        String deleteQuery="DELETE FROM item WHERE code='"+code+"'";
-        Statement statement = connection.createStatement();
-        int number = statement.executeUpdate(deleteQuery);
+
+        boolean isDeleted = itemModel.deleteItem(code);
         loadItemTable();
-        //customerTable.refresh();   just like reloadCustomerTable()
-        if (number>0){
+        if (isDeleted){
             new Alert(Alert.AlertType.INFORMATION,"Deleted Successfully").show();
         }else {
             new Alert(Alert.AlertType.INFORMATION,"Something went wrong").show();
