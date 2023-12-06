@@ -23,23 +23,23 @@
       <JFXTextField fx:id="qtyField" layoutX="728.0" layoutY="138.0" />
       <Label layoutX="513.0" layoutY="106.0" text="Unit Price" />
       <Label layoutX="728.0" layoutY="106.0" text="Buying QTY" />
-      <JFXTreeTableView layoutX="119.0" layoutY="243.0" prefHeight="400.0" prefWidth="722.0">
+      <JFXTreeTableView fx:id="orderTable" layoutX="119.0" layoutY="243.0" prefHeight="400.0" prefWidth="722.0">
          <columns>
-            <TreeTableColumn prefWidth="129.0" text="Code" />
-            <TreeTableColumn prefWidth="212.0" text="Description" />
-            <TreeTableColumn minWidth="0.0" prefWidth="97.0" text="QTY" />
-            <TreeTableColumn minWidth="0.0" prefWidth="110.0" text="Amount" />
-            <TreeTableColumn minWidth="0.0" prefWidth="173.0" text="Option" />
+            <TreeTableColumn fx:id="codeCol" prefWidth="129.0" text="Code" />
+            <TreeTableColumn fx:id="descriptionCol" prefWidth="212.0" text="Description" />
+            <TreeTableColumn fx:id="qtyCol" minWidth="0.0" prefWidth="97.0" text="QTY" />
+            <TreeTableColumn fx:id="amountCol" minWidth="0.0" prefWidth="110.0" text="Amount" />
+            <TreeTableColumn fx:id="optionCol" minWidth="0.0" prefWidth="173.0" text="Option" />
          </columns>
       </JFXTreeTableView>
-      <JFXButton layoutX="813.0" layoutY="198.0" prefHeight="31.0" prefWidth="100.0" text="Add to Cart" />
-      <JFXButton layoutX="813.0" layoutY="670.0" prefHeight="31.0" prefWidth="100.0" text="Place Order" />
+      <JFXButton fx:id="cartBtn" layoutX="813.0" layoutY="198.0" onAction="#cartBtnOnActon" prefHeight="31.0" prefWidth="100.0" text="Add to Cart" />
+      <JFXButton layoutX="813.0" layoutY="670.0" onAction="#placeOrderBtnOnAction" prefHeight="31.0" prefWidth="100.0" text="Place Order" />
       <Label layoutX="57.0" layoutY="665.0" prefHeight="42.0" prefWidth="62.0" text="Total:">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="128.0" layoutY="665.0" prefHeight="42.0" prefWidth="138.0" text="00.00">
+      <Label fx:id="totalLbl" layoutX="128.0" layoutY="665.0" prefHeight="42.0" prefWidth="138.0" text="00.00">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
