@@ -22,6 +22,7 @@ public class MainViewController implements Initializable {
     public JFXButton sceneChangeBtn;
     public Label timeLbl;
     public JFXButton itemViewBtn;
+    public JFXButton placeOrderBtn;
 
     public void sceneChangeBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) sceneChangeBtn.getScene().getWindow();
@@ -46,5 +47,11 @@ public class MainViewController implements Initializable {
         Stage stage = (Stage) itemViewBtn.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ItemView.fxml"))));
         stage.setTitle("Item View");
+    }
+
+    public void placeOrderOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) placeOrderBtn.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/PlaceOrderView.fxml"))));
+        stage.setTitle("Place Order View");
     }
 }

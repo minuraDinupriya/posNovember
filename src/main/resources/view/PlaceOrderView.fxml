@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.PlaceOrderViewController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="755.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PlaceOrderViewController">
+   <children>
+      <JFXComboBox layoutX="60.0" layoutY="40.0" prefHeight="42.0" prefWidth="198.0" />
+      <JFXComboBox layoutX="60.0" layoutY="127.0" prefHeight="42.0" prefWidth="198.0" />
+      <Label layoutX="60.0" layoutY="30.0" text="Customer ID" />
+      <JFXTextField layoutX="295.0" layoutY="51.0" />
+      <Label layoutX="294.0" layoutY="30.0" text="Name" />
+      <Label layoutX="60.0" layoutY="106.0" text="Item Code" />
+      <JFXTextField layoutX="295.0" layoutY="138.0" />
+      <Label layoutX="294.0" layoutY="106.0" text="Description" />
+      <JFXTextField layoutX="513.0" layoutY="138.0" />
+      <JFXTextField layoutX="728.0" layoutY="138.0" />
+      <Label layoutX="513.0" layoutY="106.0" text="Unit Price" />
+      <Label layoutX="728.0" layoutY="106.0" text="Buying QTY" />
+      <JFXTreeTableView layoutX="119.0" layoutY="243.0" prefHeight="400.0" prefWidth="722.0">
+         <columns>
+            <TreeTableColumn prefWidth="129.0" text="Code" />
+            <TreeTableColumn prefWidth="212.0" text="Description" />
+            <TreeTableColumn minWidth="0.0" prefWidth="97.0" text="QTY" />
+            <TreeTableColumn minWidth="0.0" prefWidth="110.0" text="Amount" />
+            <TreeTableColumn minWidth="0.0" prefWidth="173.0" text="Option" />
+         </columns>
+      </JFXTreeTableView>
+      <JFXButton layoutX="813.0" layoutY="198.0" prefHeight="31.0" prefWidth="100.0" text="Add to Cart" />
+      <JFXButton layoutX="813.0" layoutY="670.0" prefHeight="31.0" prefWidth="100.0" text="Place Order" />
+      <Label layoutX="57.0" layoutY="665.0" prefHeight="42.0" prefWidth="62.0" text="Total:">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="128.0" layoutY="665.0" prefHeight="42.0" prefWidth="138.0" text="00.00">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

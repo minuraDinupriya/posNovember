@@ -14,5 +14,6 @@
          </font>
       </Label>
       <JFXButton fx:id="itemViewBtn" layoutX="69.0" layoutY="126.0" onAction="#itemViewOnAction" prefHeight="31.0" prefWidth="142.0" text="Item View" />
+      <JFXButton fx:id="placeOrderBtn" layoutX="69.0" layoutY="169.0" onAction="#placeOrderOnAction" prefHeight="31.0" prefWidth="142.0" text="place Order" />
     </children>
 </AnchorPane>
