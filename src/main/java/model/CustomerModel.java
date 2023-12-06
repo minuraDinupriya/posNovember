@@ -10,5 +10,5 @@ public interface CustomerModel {
     boolean updateCustomer(CustomerDto dto) throws SQLException;
     boolean deleteCustomer(String id) throws SQLException;
     List<CustomerDto> getAllCustomers() throws SQLException;
-    CustomerDto searchCustomer(String id);
+    CustomerDto searchCustomer(String id) throws SQLException;
 }

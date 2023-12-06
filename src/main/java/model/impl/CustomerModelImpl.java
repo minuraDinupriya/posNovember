@@ -75,7 +75,19 @@ public class CustomerModelImpl implements CustomerModel {
     }
 
     @Override
-    public CustomerDto searchCustomer(String id) {
-        return null;
+    public CustomerDto searchCustomer(String id) throws SQLException {
+        String searchQuery="SELECT * FROM customer WHERE id='"+id+"'";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(searchQuery);
+        resultSet.next();
+
+        CustomerDto customerDto=new CustomerDto(
+                resultSet.getString(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                Double.parseDouble(resultSet.getString(4) )
+        );
+
+        return customerDto;
     }
 }

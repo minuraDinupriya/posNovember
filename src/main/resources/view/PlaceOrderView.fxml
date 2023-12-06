@@ -9,19 +9,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="755.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PlaceOrderViewController">
    <children>
-      <JFXComboBox layoutX="60.0" layoutY="40.0" prefHeight="42.0" prefWidth="198.0" />
-      <JFXComboBox layoutX="60.0" layoutY="127.0" prefHeight="42.0" prefWidth="198.0" />
+      <JFXComboBox fx:id="custIdCombo" layoutX="60.0" layoutY="40.0" onAction="#custIdComboOnAction" prefHeight="42.0" prefWidth="198.0" />
+      <JFXComboBox fx:id="itemCodeCombo" layoutX="60.0" layoutY="127.0" onAction="#itemCodeComboOnAction" prefHeight="42.0" prefWidth="198.0" />
       <Label layoutX="60.0" layoutY="30.0" text="Customer ID" />
-      <JFXTextField layoutX="295.0" layoutY="51.0" />
+      <JFXTextField fx:id="nameField" layoutX="295.0" layoutY="51.0" />
       <Label layoutX="294.0" layoutY="30.0" text="Name" />
       <Label layoutX="60.0" layoutY="106.0" text="Item Code" />
-      <JFXTextField layoutX="295.0" layoutY="138.0" />
+      <JFXTextField fx:id="descriptionField" layoutX="295.0" layoutY="138.0" />
       <Label layoutX="294.0" layoutY="106.0" text="Description" />
-      <JFXTextField layoutX="513.0" layoutY="138.0" />
-      <JFXTextField layoutX="728.0" layoutY="138.0" />
+      <JFXTextField fx:id="priceField" layoutX="513.0" layoutY="138.0" />
+      <JFXTextField fx:id="qtyField" layoutX="728.0" layoutY="138.0" />
       <Label layoutX="513.0" layoutY="106.0" text="Unit Price" />
       <Label layoutX="728.0" layoutY="106.0" text="Buying QTY" />
       <JFXTreeTableView layoutX="119.0" layoutY="243.0" prefHeight="400.0" prefWidth="722.0">
