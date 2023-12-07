@@ -12,47 +12,49 @@ public class CustomerModelImpl implements CustomerModel {
     Connection connection=DbConnection.getConnection();
     @Override
     public boolean saveCustomer(CustomerDto dto) throws SQLException {
-        String sql="INSERT INTO customer VALUES('"+dto.getId()+"','"+dto.getName()+"','"+dto.getAddress()+"','"+dto.getSalary()+"')";
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(sql)>0;
+//        String sql="INSERT INTO customer VALUES('"+dto.getId()+"','"+dto.getName()+"','"+dto.getAddress()+"','"+dto.getSalary()+"')";
+//        Statement statement = connection.createStatement();
+//        return statement.executeUpdate(sql)>0;
 
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//        preparedStatement.setString(1,dto.getId());
-//        preparedStatement.setString(2,dto.getName());
-//        preparedStatement.setString(3,dto.getAddress());
-//        preparedStatement.setString(4, String.valueOf(dto.getSalary()));
-//
-//        return preparedStatement.executeUpdate(sql)>0;
+        String sql="INSERT INTO customer VALUES(?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,dto.getId());
+        preparedStatement.setString(2,dto.getName());
+        preparedStatement.setString(3,dto.getAddress());
+        preparedStatement.setString(4, String.valueOf(dto.getSalary()));
+
+        return preparedStatement.executeUpdate()>0;
     }
 
     @Override
     public boolean updateCustomer(CustomerDto dto) throws SQLException {
-        String updateQuery="UPDATE customer SET name='"+dto.getName()+"',address='"+dto.getAddress()+
-                "',salary="+dto.getSalary()+" WHERE id='"+dto.getId()+"'";
+//        String updateQuery="UPDATE customer SET name='"+dto.getName()+"',address='"+dto.getAddress()+
+//                "',salary="+dto.getSalary()+" WHERE id='"+dto.getId()+"'";
 
         Statement statement = connection.createStatement();
-        return statement.executeUpdate(updateQuery)>0;
-//        String updateQuery="UPDATE customer SET name=(?), address=(?), salary=(?) WHERE id=(?)";
-//
-//        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-//        preparedStatement.setString(1,dto.getName());
-//        preparedStatement.setString(2,dto.getAddress());
-//        preparedStatement.setString(3,String.valueOf(dto.getSalary()));
-//        preparedStatement.setString(4,dto.getId());
+        //return statement.executeUpdate(updateQuery)>0;
+        String updateQuery="UPDATE customer SET name=?, address=?, salary=? WHERE id=?";
 
-        //return preparedStatement.executeUpdate(updateQuery)>0;
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+        preparedStatement.setString(1,dto.getName());
+        preparedStatement.setString(2,dto.getAddress());
+        preparedStatement.setDouble(3,dto.getSalary());
+        preparedStatement.setString(4,dto.getId());
+
+        return preparedStatement.executeUpdate(updateQuery)>0;
     }
 
     @Override
     public boolean deleteCustomer(String id) throws SQLException {
-        String deleteQuery="DELETE FROM customer WHERE id='"+id+"'";
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(deleteQuery)>0;
+//        String deleteQuery="DELETE FROM customer WHERE id='"+id+"'";
+//        Statement statement = connection.createStatement();
+//        return statement.executeUpdate(deleteQuery)>0;
 
-//        PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-//        preparedStatement.setString(1,id);
-//
-//        return preparedStatement.executeUpdate(deleteQuery)>0;
+        String deleteQuery="DELETE FROM customer WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+        preparedStatement.setString(1,id);
+
+        return preparedStatement.executeUpdate(deleteQuery)>0;
     }
 
     @Override
